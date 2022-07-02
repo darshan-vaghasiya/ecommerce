@@ -1,6 +1,7 @@
 import random
 
 from django.conf import settings
+from django.core.mail import send_mail
 from rest_framework import serializers
 from custom_auth.models import User
 
@@ -25,10 +26,10 @@ class SignInSerializer(serializers.ModelSerializer):
             user = user.first()
         otp = random.randint(1000, 9999)
         subject = 'welcome to ecommerce world'
-        message = f'Please use otp for sign in.'
+        message = f'Please use this {otp} otp for sign in.'
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [validated_data["email"]]
-        # send_mail(subject, message, email_from, recipient_list)
+        send_mail(subject, message, email_from, recipient_list)
         user.otp = otp
         user.save()
         return user
