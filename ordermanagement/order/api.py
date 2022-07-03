@@ -5,7 +5,7 @@ from order.serializer import OrderSerializer, AddOrderSerializer
 from rest_framework.response import Response
 
 
-class OrderViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+class OrderViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     model = Order
     queryset = model.objects.filter(is_delete=False, is_active=True)
     serializer_class = OrderSerializer
